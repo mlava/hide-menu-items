@@ -301,28 +301,29 @@ async function hideDIVs() {
     let menuItems = document.querySelectorAll("div.log-button");
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
+        // hide items if selected as mobile only or all platforms
         if (menuItems.length > 0) {
             for (var i = 0; i < menuItems.length; i++) {
                 if (menuItems[i].innerText == "Daily Notes") {
-                    if (hmiDNPM) {
+                    if (hmiDNPM || hmiDNP) {
                         menuItems[i].style.display = "none";
                     } else {
                         menuItems[i].style.display = "";
                     }
                 } else if (menuItems[i].innerText == "Graph Overview") {
-                    if (hmiGOM) {
+                    if (hmiGOM || hmiGO) {
                         menuItems[i].style.display = "none";
                     } else {
                         menuItems[i].style.display = "";
                     }
                 } else if (menuItems[i].innerText == "All Pages") {
-                    if (hmiAPM) {
+                    if (hmiAPM || hmiAP) {
                         menuItems[i].style.display = "none";
                     } else {
                         menuItems[i].style.display = "";
                     }
                 } else if (menuItems[i].innerText == "Roam Depot") {
-                    if (hmiRDM) {
+                    if (hmiRDM || hmiRD) {
                         menuItems[i].style.display = "none";
                     } else {
                         menuItems[i].style.display = "";
@@ -335,31 +336,31 @@ async function hideDIVs() {
         if (topbar.length > 0) {
             for (var i = 0; i < topbar.length; i++) {
                 if (topbar[i].childNodes[0]?.childNodes[0]?.childNodes[0]?.childNodes[0]?.childNodes[0]?.classList[1] == "bp3-icon-filter") {
-                    if (hmiPFM) {
+                    if (hmiPFM || hmiPF) {
                         topbar[i].style.display = "none";
                     } else {
                         topbar[i].style.display = "";
                     }
                 } else if (topbar[i].childNodes[0]?.childNodes[0]?.childNodes[0]?.classList[1] == "bp3-icon-calendar") {
-                    if (hmiCalM) {
+                    if (hmiCalM || hmiCal) {
                         topbar[i].style.display = "none";
                     } else {
                         topbar[i].style.display = "";
                     }
                 } else if (topbar[i].childNodes[0]?.childNodes[0]?.childNodes[0]?.childNodes[0]?.classList[3] == "bp3-icon-more") {
-                    if (hmi3DMM) {
+                    if (hmi3DMM || hmi3DM) {
                         topbar[i].style.display = "none";
                     } else {
                         topbar[i].style.display = "";
                     }
                 } else if (topbar[i].childNodes[0]?.childNodes[0]?.childNodes[0]?.childNodes[0]?.classList[3] == "bp3-icon-horizontal-distribution") {
-                    if (hmiPWM) {
+                    if (hmiPWM || hmiPW) {
                         topbar[i].style.display = "none";
                     } else {
                         topbar[i].style.display = "";
                     }
                 } else if (topbar[i].childNodes[0]?.childNodes[0]?.classList[2] == "bp3-icon-help") {
-                    if (hmiHelpM) {
+                    if (hmiHelpM || hmiHelp) {
                         topbar[i].style.display = "none";
                     } else {
                         topbar[i].style.display = "";
@@ -368,6 +369,7 @@ async function hideDIVs() {
             }
         }
     } else {
+        // hide items only if selected for all platforms
         if (menuItems.length > 0) {
             for (var i = 0; i < menuItems.length; i++) {
                 if (menuItems[i].innerText == "Daily Notes") {
