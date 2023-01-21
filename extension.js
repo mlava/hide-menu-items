@@ -132,7 +132,16 @@ export default {
         }
     },
     onunload: () => {
-
+        hmiDNP = false;
+        hmiGO = false;
+        hmiAP = false;
+        hmiRD = false;
+        hmiPF = false;
+        hmiCal = false;
+        hmi3DM = false;
+        hmiPW = false;
+        hmiHelp = false;
+        hideDIVs();
     }
 }
 
@@ -168,7 +177,7 @@ async function hideDIVs() {
 
         }
     }
-    
+
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");    
     if (topbar.length > 0) {
         for (var i = 0; i < topbar.length; i++) {
