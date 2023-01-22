@@ -13,37 +13,37 @@ export default {
                 {
                     id: "hmi-PF",
                     name: "Page Filter",
-                    description: "Turn on to hide the Page Filter button",
+                    description: "Whether to hide the Page Filter button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 1); } },
                 },
                 {
                     id: "hmi-Cal",
                     name: "Calendar",
-                    description: "Turn on to hide the Calendar button",
+                    description: "Whether to hide the Calendar button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 2); } },
                 },
                 {
                     id: "hmi-3DM",
                     name: "Three-Dot Menu",
-                    description: "Turn on to hide the Three-Dot Menu button",
+                    description: "Whether to hide the Three-Dot Menu button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 3); } },
                 },
                 {
                     id: "hmi-PW",
                     name: "Page Width",
-                    description: "Turn on to hide the Page Width button",
+                    description: "Whether to hide the Page Width button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 4); } },
                 },
                 {
                     id: "hmi-Help",
                     name: "Help",
-                    description: "Turn on to hide the Help button",
+                    description: "Whether to hide the Help button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 5); } },
                 },
                 {
                     id: "hmi-RS",
                     name: "Right Sidebar",
-                    description: "Turn on to hide the Right Sidebar button",
+                    description: "Whether to hide the Right Sidebar button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 6); } },
                 },
             ]
