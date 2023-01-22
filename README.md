@@ -10,6 +10,7 @@ In the topbar you can choose to hide:
 - Three Dot menu button
 - Page Width button
 - Help button
+- Right Sidebar button
 
 You can select to Hide on Mobile or Hide on All Platforms. This means you can have different settings for different purposes.
 
