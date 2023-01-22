@@ -1,16 +1,8 @@
-Use Roam the way you want to, without unneccessary clutter!
+Reduce unneccessary clutter!
 
-This extension allows you to take control of the appearance of your Roam Research graph.
+This extension allows you to take control of the appearance of your Roam Research topbar. You can choose to show or hide default Roam Research buttons in the topbar.
 
-Show or hide default Roam Research menu items in the left sidebar and the topbar.
-
-![image](https://user-images.githubusercontent.com/6857790/213867414-241f1022-85ec-408b-9440-eaa6edfaf6e0.png)
-
-In the left sidebar you can choose to hide:
-- Daily Notes
-- Graph Overview
-- All Pages
-- Roam Depot
+![image](https://user-images.githubusercontent.com/6857790/213939180-781d187f-0315-4b4a-95bc-324987a041ee.png)
 
 In the topbar you can choose to hide:
 - Page Filter button
@@ -19,9 +11,9 @@ In the topbar you can choose to hide:
 - Page Width button
 - Help button
 
-You can choose to hide on mobile only, or across all platforms. Use the 'Mobile or All Platforms' switch to change menus. Note that if you are in the mobile only menu, a change to the items will only be evident when using your graph on a mobile device. If you make a change in the All Platforms menu, that change will be evident on all devices.
+You can select to Hide on Mobile or Hide on All Platforms. This means you can have different settings for different purposes.
 
-You can have specific settings for certain items. For example, if you want to hide the Help button on mobile only but hide the Calendar button on all platforms, just select Help in the mobile menu and Calendar in the all platforms menu.
+For example, if you want to hide the Help button on mobile only but hide the Calendar button on all platforms, just select Hide on Mobile for Help and Hide on All Platforms for Calendar.
 
 TODO:
 1. allow buttons from Roam Depot extensions to be hidden
