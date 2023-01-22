@@ -87,7 +87,6 @@ export default {
 
 async function hideDIVs() {
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
-    console.info(topbar);
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
         // hide items if selected as mobile only or all platforms
         if (topbar.length > 0) {
