@@ -2,7 +2,7 @@ Reduce unneccessary clutter!
 
 This extension allows you to take control of the appearance of your Roam Research topbar. You can choose to show or hide default Roam Research buttons in the topbar.
 
-![image](https://user-images.githubusercontent.com/6857790/213939180-781d187f-0315-4b4a-95bc-324987a041ee.png)
+![image](https://user-images.githubusercontent.com/6857790/213940140-67f212c2-596f-4771-a92a-e5519136a80a.png)
 
 In the topbar you can choose to hide:
 - Page Filter button
