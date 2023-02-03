@@ -4,6 +4,7 @@ var hmi3DM = false;
 var hmiPW = false;
 var hmiHelp = false;
 var hmiRS = false;
+let observer = undefined;
 
 export default {
     onload: ({ extensionAPI }) => {
@@ -74,8 +75,34 @@ export default {
             hideDIVs();
         }
         hideDIVs();
+
+        async function initiateObserver() {
+            const targetNode1 = document.getElementsByClassName("rm-topbar")[0];
+            const config = { attributes: false, childList: true, subtree: true };
+            const callback = function (mutationsList, observer) {
+                for (const mutation of mutationsList) {
+                    if (mutation.addedNodes[0]) {
+                        for (var i = 0; i < mutation.addedNodes[0]?.classList.length; i++) {
+                            if (mutation.addedNodes[0]?.classList[i] == "rm-open-left-sidebar-btn") { // left sidebar has been closed
+                                hideDIVs();
+                            }
+                        }
+                    } else if (mutation.removedNodes[0]) {
+                        for (var i = 0; i < mutation.removedNodes[0]?.classList.length; i++) {
+                            if (mutation.removedNodes[0]?.classList[i] == "rm-open-left-sidebar-btn") { // left sidebar has been opened
+                                hideDIVs();
+                            }
+                        }
+                    }
+                }
+            };
+            observer = new MutationObserver(callback);
+            observer.observe(targetNode1, config);
+        }
+        initiateObserver();
     },
     onunload: () => {
+        observer.disconnect();
         hmiPF = false;
         hmiCal = false;
         hmi3DM = false;
