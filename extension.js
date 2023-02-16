@@ -1,9 +1,4 @@
-var hmiPF = false;
-var hmiCal = false;
-var hmi3DM = false;
-var hmiPW = false;
-var hmiHelp = false;
-var hmiRS = false;
+var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
 let observer = undefined;
 
 export default {
@@ -51,13 +46,40 @@ export default {
         };
         extensionAPI.settings.panel.create(config);
 
-        hmiPF = extensionAPI.settings.get("hmi-PF");
-        hmiCal = extensionAPI.settings.get("hmi-Cal");
-        hmi3DM = extensionAPI.settings.get("hmi-3DM");
-        hmiPW = extensionAPI.settings.get("hmi-PW");
-        hmiHelp = extensionAPI.settings.get("hmi-Help");
-        hmiRS = extensionAPI.settings.get("hmi-RS");
+        // onload
+        if (extensionAPI.settings.get("hmi-PF")) {
+            hmiPF = extensionAPI.settings.get("hmi-PF");
+        } else {
+            hmiPF = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-Cal")) {
+            hmiCal = extensionAPI.settings.get("hmi-Cal");
+        } else {
+            hmiCal = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-3DM")) {
+            hmi3DM = extensionAPI.settings.get("hmi-3DM");
+        } else {
+            hmi3DM = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-PW")) {
+            hmiPW = extensionAPI.settings.get("hmi-PW");
+        } else {
+            hmiPW = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-Help")) {
+            hmiHelp = extensionAPI.settings.get("hmi-Help");
+        } else {
+            hmiHelp = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-RS")) {
+            hmiRS = extensionAPI.settings.get("hmi-RS");
+        } else {
+            hmiRS = "Show on All Platforms";
+        }
+        hideDIVs();
 
+        // onchange
         function setHMI(evt, i) {
             if (i == 1) {
                 hmiPF = evt;
@@ -74,7 +96,6 @@ export default {
             }
             hideDIVs();
         }
-        hideDIVs();
 
         async function initiateObserver() {
             const targetNode1 = document.getElementsByClassName("rm-topbar")[0];
