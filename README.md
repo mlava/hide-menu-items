@@ -19,7 +19,8 @@ In the topbar you can choose to hide:
 - Workspaces button
 - Table of Contents button
 - Reading Time section
-- Auto Tag button
+- Auto Tag button (thanks @Abhay)
+- CSS Dark Mode Toggle (thanks @Matt)
 
 You can select to Hide on Mobile or Hide on All Platforms. This means you can have different settings for different purposes.
 
