@@ -1,5 +1,5 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
-var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT = undefined;
+var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT = undefined;
 let observer = undefined;
 
 export default {
@@ -73,6 +73,12 @@ export default {
                     description: "Whether to hide the Auto Tag button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 11); } },
                 },
+                {
+                    id: "hmi-CDMT",
+                    name: "CSS Dark Mode Toggle",
+                    description: "Whether to hide the CSS Dark Mode Toggle button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 12); } },
+                },
             ]
         };
         extensionAPI.settings.panel.create(config);
@@ -135,6 +141,11 @@ export default {
         } else {
             hmiAT = "Show on All Platforms";
         }
+        if (extensionAPI.settings.get("hmi-CDMT")) {
+            hmiCDMT = extensionAPI.settings.get("hmi-CDMT");
+        } else {
+            hmiCDMT = "Show on All Platforms";
+        }
         hideDIVs();
 
         // onchange
@@ -161,6 +172,8 @@ export default {
                 hmiRT = evt;
             } else if (i == 11) {
                 hmiAT = evt;
+            } else if (i == 12) {
+                hmiCDMT = evt;
             }
             hideDIVs();
         }
@@ -203,13 +216,14 @@ export default {
         hmiTOC = false;
         hmiRT = false;
         hmiAT = false;
+        hmiCDMT = false;
         hideDIVs();
     }
 }
 
 async function hideDIVs() {
     var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
-    var ytt, ws, toc, rt, at, atSib;
+    var ytt, ws, toc, rt, at, atSib, cdmt;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (topbar.length > 0) {
@@ -242,6 +256,11 @@ async function hideDIVs() {
     ws = document.getElementById("workspaces");
     toc = document.getElementById("tableOfContents");
     rt = document.getElementById("rtDiv");
+    cdmt = document.getElementsByClassName("dm-toggle");
+    
+    // Roam Studio dark mode toggle - class "roamstudio-dm-toggle" and has sib which has same class! (need to iterate through results)
+    // Bionic Text - id "bionic-button" and has nextSib
+    // Zotero - id "zotero-roam-slot" and has a nextSib
 
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
         // hide items if selected as mobile only or all platforms
@@ -380,6 +399,19 @@ async function hideDIVs() {
                 atSib.style.display = "";
             }
         }
+        if (hmiCDMT != "Show on All Platforms") {
+            if (cdmt != undefined) {
+                cdmt[0].style.display = "none";
+                cdmt[1].style.display = "none";
+                cdmt[2].style.display = "none";
+            }
+        } else {
+            if (cdmt != undefined) {
+                cdmt[0].style.display = "";
+                cdmt[1].style.display = "";
+                cdmt[2].style.display = "";
+            }
+        }
     } else {
         // hide items only if selected for all platforms
         if (hmiPF == "Hide on All Platforms") {
@@ -515,6 +547,19 @@ async function hideDIVs() {
             }
             if (atSib != undefined) {
                 atSib.style.display = "";
+            }
+        }
+        if (hmiCDMT == "Hide on All Platforms") {
+            if (cdmt != undefined) {
+                cdmt[0].style.display = "none";
+                cdmt[1].style.display = "none";
+                cdmt[2].style.display = "none";
+            }
+        } else {
+            if (cdmt != undefined) {
+                cdmt[0].style.display = "";
+                cdmt[1].style.display = "";
+                cdmt[2].style.display = "";
             }
         }
     }
