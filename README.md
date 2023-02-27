@@ -21,7 +21,7 @@ Extension buttons you can choose to hide:
 - Table of Contents button
 - Reading Time section
 - Auto Tag button (thanks @Abhay)
-- CSS Dark Mode Toggle (thanks @Matt)
+- CSS Dark Mode Toggle button (thanks @Matt)
 
 You can select to Hide on Mobile or Hide on All Platforms. This means you can have different settings for different purposes.
 
