@@ -1,5 +1,5 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
-var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT = undefined;
+var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT, hmiBT, hmiRSDMT = undefined;
 let observer = undefined;
 
 export default {
@@ -79,10 +79,22 @@ export default {
                     description: "Whether to hide the CSS Dark Mode Toggle button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 12); } },
                 },
+                {
+                    id: "hmi-BT",
+                    name: "Bionic Text",
+                    description: "Whether to hide the Bionic Text button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 13); } },
+                },
+                {
+                    id: "hmi-RSDMT",
+                    name: "Roam Studio Dark Mode Toggle",
+                    description: "Whether to hide the Roam Studio Dark Mode Toggle button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 14); } },
+                },
             ]
         };
         extensionAPI.settings.panel.create(config);
-
+        
         // onload
         if (extensionAPI.settings.get("hmi-PF")) {
             hmiPF = extensionAPI.settings.get("hmi-PF");
@@ -146,6 +158,16 @@ export default {
         } else {
             hmiCDMT = "Show on All Platforms";
         }
+        if (extensionAPI.settings.get("hmi-BT")) {
+            hmiBT = extensionAPI.settings.get("hmi-BT");
+        } else {
+            hmiBT = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-RSDMT")) {
+            hmiRSDMT = extensionAPI.settings.get("hmi-RSDMT");
+        } else {
+            hmiRSDMT = "Show on All Platforms";
+        }
         hideDIVs();
 
         // onchange
@@ -174,6 +196,10 @@ export default {
                 hmiAT = evt;
             } else if (i == 12) {
                 hmiCDMT = evt;
+            } else if (i == 13) {
+                hmiBT = evt;
+            } else if (i == 14) {
+                hmiRSDMT = evt;
             }
             hideDIVs();
         }
@@ -217,13 +243,15 @@ export default {
         hmiRT = false;
         hmiAT = false;
         hmiCDMT = false;
+        hmiBT = false;
+        hmiRSDMT = false;
         hideDIVs();
     }
 }
 
 async function hideDIVs() {
     var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
-    var ytt, ws, toc, rt, at, atSib, cdmt;
+    var ytt, ws, toc, rt, at, atSib, cdmt, bt, btSib, rsdmt;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (topbar.length > 0) {
@@ -257,9 +285,10 @@ async function hideDIVs() {
     toc = document.getElementById("tableOfContents");
     rt = document.getElementById("rtDiv");
     cdmt = document.getElementsByClassName("dm-toggle");
+    bt = document.getElementById("bionic-button");
+    btSib = bt.nextSibling;
+    rsdmt = document.getElementsByClassName("roamstudio-dm-toggle");
     
-    // Roam Studio dark mode toggle - class "roamstudio-dm-toggle" and has sib which has same class! (need to iterate through results)
-    // Bionic Text - id "bionic-button" and has nextSib
     // Zotero - id "zotero-roam-slot" and has a nextSib
 
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
@@ -400,16 +429,45 @@ async function hideDIVs() {
             }
         }
         if (hmiCDMT != "Show on All Platforms") {
-            if (cdmt != undefined) {
+            if (cdmt != undefined && cdmt.length > 0) {
                 cdmt[0].style.display = "none";
                 cdmt[1].style.display = "none";
                 cdmt[2].style.display = "none";
             }
         } else {
-            if (cdmt != undefined) {
+            if (cdmt != undefined && cdmt.length > 0) {
                 cdmt[0].style.display = "";
                 cdmt[1].style.display = "";
                 cdmt[2].style.display = "";
+            }
+        }
+        if (hmiBT != "Show on All Platforms") {
+            if (bt != undefined) {
+                bt.style.display = "none";
+            }
+            if (btSib != undefined) {
+                btSib.style.display = "none";
+            }
+        } else {
+            if (bt != undefined) {
+                bt.style.display = "";
+            }
+            if (btSib != undefined) {
+                btSib.style.display = "";
+            }
+        }
+        if (hmiRSDMT != "Show on All Platforms") {
+            console.info(rsdmt)
+            if (rsdmt != undefined && rsdmt.length > 0) {
+                rsdmt[0].style.display = "none";
+                rsdmt[1].style.display = "none";
+                rsdmt[2].style.display = "none";
+            }
+        } else {
+            if (rsdmt != undefined && rsdmt.length > 0) {
+                rsdmt[0].style.display = "";
+                rsdmt[1].style.display = "";
+                rsdmt[2].style.display = "";
             }
         }
     } else {
@@ -550,16 +608,44 @@ async function hideDIVs() {
             }
         }
         if (hmiCDMT == "Hide on All Platforms") {
-            if (cdmt != undefined) {
+            if (cdmt != undefined && cdmt.length > 0) {
                 cdmt[0].style.display = "none";
                 cdmt[1].style.display = "none";
                 cdmt[2].style.display = "none";
             }
         } else {
-            if (cdmt != undefined) {
+            if (cdmt != undefined && cdmt.length > 0) {
                 cdmt[0].style.display = "";
                 cdmt[1].style.display = "";
                 cdmt[2].style.display = "";
+            }
+        }
+        if (hmiBT == "Hide on All Platforms") {
+            if (bt != undefined) {
+                bt.style.display = "none";
+            }
+            if (btSib != undefined) {
+                btSib.style.display = "none";
+            }
+        } else {
+            if (bt != undefined) {
+                bt.style.display = "";
+            }
+            if (btSib != undefined) {
+                btSib.style.display = "";
+            }
+        }
+        if (hmiRSDMT == "Hide on All Platforms") {
+            if (rsdmt != undefined && rsdmt.length > 0) {
+                rsdmt[0].style.display = "none";
+                rsdmt[1].style.display = "none";
+                rsdmt[2].style.display = "none";
+            }
+        } else {
+            if (rsdmt != undefined && rsdmt.length > 0) {
+                rsdmt[0].style.display = "";
+                rsdmt[1].style.display = "";
+                rsdmt[2].style.display = "";
             }
         }
     }
