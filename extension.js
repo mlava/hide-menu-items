@@ -1,4 +1,5 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
+var hmiYTT, hmiWS, hmiTOC, hmiAT = undefined;
 let observer = undefined;
 
 export default {
@@ -42,6 +43,30 @@ export default {
                     description: "Whether to hide the Right Sidebar button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 6); } },
                 },
+                {
+                    id: "hmi-YTT",
+                    name: "Yesterday & Tomorrow",
+                    description: "Whether to hide the Yesterday & Tomorrow buttons",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 7); } },
+                },
+                {
+                    id: "hmi-WS",
+                    name: "Workspaces",
+                    description: "Whether to hide the Workspaces button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 8); } },
+                },
+                {
+                    id: "hmi-TOC",
+                    name: "Table of Contents",
+                    description: "Whether to hide the Table of Contents button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 9); } },
+                },
+                {
+                    id: "hmi-AT",
+                    name: "Auto Tag",
+                    description: "Whether to hide the Auto Tag button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 10); } },
+                },
             ]
         };
         extensionAPI.settings.panel.create(config);
@@ -77,6 +102,27 @@ export default {
         } else {
             hmiRS = "Show on All Platforms";
         }
+        
+        if (extensionAPI.settings.get("hmi-YTT")) {
+            hmiYTT = extensionAPI.settings.get("hmi-YTT");
+        } else {
+            hmiYTT = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-WS")) {
+            hmiWS = extensionAPI.settings.get("hmi-WS");
+        } else {
+            hmiWS = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-TOC")) {
+            hmiTOC = extensionAPI.settings.get("hmi-TOC");
+        } else {
+            hmiTOC = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-AT")) {
+            hmiAT = extensionAPI.settings.get("hmi-AT");
+        } else {
+            hmiAT = "Show on All Platforms";
+        }
         hideDIVs();
 
         // onchange
@@ -93,6 +139,14 @@ export default {
                 hmiHelp = evt;
             } else if (i == 6) {
                 hmiRS = evt;
+            } else if (i == 7) {
+                hmiYTT = evt;
+            } else if (i == 8) {
+                hmiWS = evt;
+            } else if (i == 9) {
+                hmiTOC = evt;
+            } else if (i == 10) {
+                hmiAT = evt;
             }
             hideDIVs();
         }
@@ -130,12 +184,17 @@ export default {
         hmiPW = false;
         hmiHelp = false;
         hmiRS = false;
+        hmiYTT = false;
+        hmiWS = false;
+        hmiTOC = false;
+        hmiAT = false;
         hideDIVs();
     }
 }
 
 async function hideDIVs() {
     var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
+    var ytt, ws, toc, at, atSib;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (topbar.length > 0) {
@@ -157,9 +216,16 @@ async function hideDIVs() {
                 helpSib = help.nextSibling;
             } else if (topbar[i].innerHTML.indexOf("bp3-icon-menu-closed") !== -1) {
                 rightSidebar = topbar[i];
+            } else if (topbar[i].innerHTML.indexOf("bp3-icon-eye-off") !== -1) {
+                at = topbar[i];
+                atSib = at.nextSibling;
             }
         }
     }
+
+    ytt = document.getElementById("todayTomorrow");
+    ws = document.getElementById("workspaces");
+    toc = document.getElementById("tableOfContents");
 
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
         // hide items if selected as mobile only or all platforms
@@ -245,6 +311,48 @@ async function hideDIVs() {
         } else {
             if (rightSidebar != undefined) {
                 rightSidebar.style.display = "";
+            }
+        }
+        if (hmiYTT != "Show on All Platforms") {
+            if (ytt != undefined) {
+                ytt.style.display = "none";
+            }
+        } else {
+            if (ytt != undefined) {
+                ytt.style.display = "";
+            }
+        }
+        if (hmiWS != "Show on All Platforms") {
+            if (ws != undefined) {
+                ws.style.display = "none";
+            }
+        } else {
+            if (ws != undefined) {
+                ws.style.display = "";
+            }
+        }
+        if (hmiTOC != "Show on All Platforms") {
+            if (toc != undefined) {
+                toc.style.display = "none";
+            }
+        } else {
+            if (toc != undefined) {
+                toc.style.display = "";
+            }
+        }
+        if (hmiAT != "Show on All Platforms") {
+            if (at != undefined) {
+                at.style.display = "none";
+            }
+            if (atSib != undefined) {
+                atSib.style.display = "none";
+            }
+        } else {
+            if (at != undefined) {
+                at.style.display = "";
+            }
+            if (atSib != undefined) {
+                atSib.style.display = "";
             }
         }
     } else {
@@ -333,53 +441,47 @@ async function hideDIVs() {
                 rightSidebar.style.display = "";
             }
         }
-    }
-}
-
-// hopefully redundant code, kept only to make sure above is working properly on mobile, electron etc
-// I will remove in a future version if above working correctly
-
-/*
-    let electron = false;
-    if (window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isDesktop) {
-        electron = true;
-    }
-
-    if (!electron) {
-        pf = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-icon.bp3-icon-filter)");
-        pfSib = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-icon.bp3-icon-filter) + .rm-topbar__spacer-sm");
-        calendar = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-icon.bp3-icon-calendar)");
-        calendarSib = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-icon.bp3-icon-calendar) + .rm-topbar__spacer-sm");
-        threeDot = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-small.bp3-icon-more)");
-        threeDotSib = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-small.bp3-icon-more) + .rm-topbar__spacer-sm");
-        width = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-small.bp3-icon-horizontal-distribution)");
-        widthSib = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-small.bp3-icon-horizontal-distribution) + .rm-topbar__spacer-sm");
-        help = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-icon-help.bp3-small)");
-        helpSib = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-button.bp3-minimal.bp3-icon-help.bp3-small) + .rm-topbar__spacer-sm");
-        rightSidebar = document.querySelector("span.bp3-popover-wrapper:has(span.bp3-icon-menu-closed)");
-    } else {
-        let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
-        if (topbar.length > 0) {
-            for (var i = 0; i < topbar.length; i++) {
-                if (topbar[i].innerHTML.indexOf("bp3-icon-filter") !== -1) {
-                    pf = topbar[i];
-                    pfSib = pf.nextSibling;
-                } else if (topbar[i].innerHTML.indexOf("bp3-icon-calendar") !== -1) {
-                    calendar = topbar[i];
-                    calendarSib = calendar.nextSibling;
-                } else if (topbar[i].innerHTML.indexOf("bp3-icon-more") !== -1) {
-                    threeDot = topbar[i];
-                    threeDotSib = threeDot.nextSibling;
-                } else if (topbar[i].innerHTML.indexOf("bp3-icon-horizontal-distribution") !== -1) {
-                    width = topbar[i];
-                    widthSib = width.nextSibling;
-                } else if (topbar[i].innerHTML.indexOf("bp3-icon-help") !== -1) {
-                    help = topbar[i];
-                    helpSib = help.nextSibling;
-                } else if (topbar[i].innerHTML.indexOf("bp3-icon-menu-closed") !== -1) {
-                    rightSidebar = topbar[i];
-                }
+        if (hmiYTT == "Hide on All Platforms") {
+            if (ytt != undefined) {
+                ytt.style.display = "none";
+            }
+        } else {
+            if (ytt != undefined) {
+                ytt.style.display = "";
+            }
+        }
+        if (hmiWS == "Hide on All Platforms") {
+            if (ws != undefined) {
+                ws.style.display = "none";
+            }
+        } else {
+            if (ws != undefined) {
+                ws.style.display = "";
+            }
+        }
+        if (hmiTOC == "Hide on All Platforms") {
+            if (toc != undefined) {
+                toc.style.display = "none";
+            }
+        } else {
+            if (toc != undefined) {
+                toc.style.display = "";
+            }
+        }
+        if (hmiAT == "Hide on All Platforms") {
+            if (at != undefined) {
+                at.style.display = "none";
+            }
+            if (atSib != undefined) {
+                atSib.style.display = "none";
+            }
+        } else {
+            if (at != undefined) {
+                at.style.display = "";
+            }
+            if (atSib != undefined) {
+                atSib.style.display = "";
             }
         }
     }
-*/
+}
