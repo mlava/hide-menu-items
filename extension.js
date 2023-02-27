@@ -1,5 +1,5 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
-var hmiYTT, hmiWS, hmiTOC, hmiAT = undefined;
+var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT = undefined;
 let observer = undefined;
 
 export default {
@@ -62,10 +62,16 @@ export default {
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 9); } },
                 },
                 {
+                    id: "hmi-RT",
+                    name: "Reading Time",
+                    description: "Whether to hide the Reading Time div",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 10); } },
+                },
+                {
                     id: "hmi-AT",
                     name: "Auto Tag",
                     description: "Whether to hide the Auto Tag button",
-                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 10); } },
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 11); } },
                 },
             ]
         };
@@ -102,7 +108,8 @@ export default {
         } else {
             hmiRS = "Show on All Platforms";
         }
-        
+
+        // third party extensions
         if (extensionAPI.settings.get("hmi-YTT")) {
             hmiYTT = extensionAPI.settings.get("hmi-YTT");
         } else {
@@ -117,6 +124,11 @@ export default {
             hmiTOC = extensionAPI.settings.get("hmi-TOC");
         } else {
             hmiTOC = "Show on All Platforms";
+        }
+        if (extensionAPI.settings.get("hmi-RT")) {
+            hmiRT = extensionAPI.settings.get("hmi-RT");
+        } else {
+            hmiRT = "Show on All Platforms";
         }
         if (extensionAPI.settings.get("hmi-AT")) {
             hmiAT = extensionAPI.settings.get("hmi-AT");
@@ -146,6 +158,8 @@ export default {
             } else if (i == 9) {
                 hmiTOC = evt;
             } else if (i == 10) {
+                hmiRT = evt;
+            } else if (i == 11) {
                 hmiAT = evt;
             }
             hideDIVs();
@@ -187,6 +201,7 @@ export default {
         hmiYTT = false;
         hmiWS = false;
         hmiTOC = false;
+        hmiRT = false;
         hmiAT = false;
         hideDIVs();
     }
@@ -194,7 +209,7 @@ export default {
 
 async function hideDIVs() {
     var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
-    var ytt, ws, toc, at, atSib;
+    var ytt, ws, toc, rt, at, atSib;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (topbar.length > 0) {
@@ -226,6 +241,7 @@ async function hideDIVs() {
     ytt = document.getElementById("todayTomorrow");
     ws = document.getElementById("workspaces");
     toc = document.getElementById("tableOfContents");
+    rt = document.getElementById("rtDiv");
 
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
         // hide items if selected as mobile only or all platforms
@@ -338,6 +354,15 @@ async function hideDIVs() {
         } else {
             if (toc != undefined) {
                 toc.style.display = "";
+            }
+        }
+        if (hmiRT != "Show on All Platforms") {
+            if (rt != undefined) {
+                rt.style.display = "none";
+            }
+        } else {
+            if (rt != undefined) {
+                rt.style.display = "";
             }
         }
         if (hmiAT != "Show on All Platforms") {
@@ -466,6 +491,15 @@ async function hideDIVs() {
         } else {
             if (toc != undefined) {
                 toc.style.display = "";
+            }
+        }
+        if (hmiRT == "Hide on All Platforms") {
+            if (rt != undefined) {
+                rt.style.display = "none";
+            }
+        } else {
+            if (rt != undefined) {
+                rt.style.display = "";
             }
         }
         if (hmiAT == "Hide on All Platforms") {
