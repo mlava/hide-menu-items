@@ -15,6 +15,7 @@ In the topbar you can choose to hide:
 - Help button
 - Right Sidebar button
 
+Extension buttons you can choose to hide:
 - Yesterday & Tomorrow buttons
 - Workspaces button
 - Table of Contents button
