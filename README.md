@@ -22,6 +22,8 @@ Extension buttons you can choose to hide:
 - Reading Time section
 - Auto Tag button (thanks @Abhay)
 - CSS Dark Mode Toggle button (thanks @Matt)
+- Bionic Text button (thanks @Fabrice)
+- Roam Studio Dark Mode Toggle button (thanks @Alex)
 
 You can select to Hide on Mobile or Hide on All Platforms. This means you can have different settings for different purposes.
 
