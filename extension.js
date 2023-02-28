@@ -94,81 +94,83 @@ export default {
             ]
         };
         extensionAPI.settings.panel.create(config);
-        
-        // onload
-        if (extensionAPI.settings.get("hmi-PF")) {
-            hmiPF = extensionAPI.settings.get("hmi-PF");
-        } else {
-            hmiPF = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-Cal")) {
-            hmiCal = extensionAPI.settings.get("hmi-Cal");
-        } else {
-            hmiCal = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-3DM")) {
-            hmi3DM = extensionAPI.settings.get("hmi-3DM");
-        } else {
-            hmi3DM = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-PW")) {
-            hmiPW = extensionAPI.settings.get("hmi-PW");
-        } else {
-            hmiPW = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-Help")) {
-            hmiHelp = extensionAPI.settings.get("hmi-Help");
-        } else {
-            hmiHelp = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-RS")) {
-            hmiRS = extensionAPI.settings.get("hmi-RS");
-        } else {
-            hmiRS = "Show on All Platforms";
-        }
 
-        // third party extensions
-        if (extensionAPI.settings.get("hmi-YTT")) {
-            hmiYTT = extensionAPI.settings.get("hmi-YTT");
-        } else {
-            hmiYTT = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-WS")) {
-            hmiWS = extensionAPI.settings.get("hmi-WS");
-        } else {
-            hmiWS = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-TOC")) {
-            hmiTOC = extensionAPI.settings.get("hmi-TOC");
-        } else {
-            hmiTOC = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-RT")) {
-            hmiRT = extensionAPI.settings.get("hmi-RT");
-        } else {
-            hmiRT = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-AT")) {
-            hmiAT = extensionAPI.settings.get("hmi-AT");
-        } else {
-            hmiAT = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-CDMT")) {
-            hmiCDMT = extensionAPI.settings.get("hmi-CDMT");
-        } else {
-            hmiCDMT = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-BT")) {
-            hmiBT = extensionAPI.settings.get("hmi-BT");
-        } else {
-            hmiBT = "Show on All Platforms";
-        }
-        if (extensionAPI.settings.get("hmi-RSDMT")) {
-            hmiRSDMT = extensionAPI.settings.get("hmi-RSDMT");
-        } else {
-            hmiRSDMT = "Show on All Platforms";
-        }
-        hideDIVs();
+        // onload
+        setTimeout(async () => {
+            if (extensionAPI.settings.get("hmi-PF")) {
+                hmiPF = extensionAPI.settings.get("hmi-PF");
+            } else {
+                hmiPF = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-Cal")) {
+                hmiCal = extensionAPI.settings.get("hmi-Cal");
+            } else {
+                hmiCal = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-3DM")) {
+                hmi3DM = extensionAPI.settings.get("hmi-3DM");
+            } else {
+                hmi3DM = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-PW")) {
+                hmiPW = extensionAPI.settings.get("hmi-PW");
+            } else {
+                hmiPW = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-Help")) {
+                hmiHelp = extensionAPI.settings.get("hmi-Help");
+            } else {
+                hmiHelp = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-RS")) {
+                hmiRS = extensionAPI.settings.get("hmi-RS");
+            } else {
+                hmiRS = "Show on All Platforms";
+            }
+
+            // third party extensions
+            if (extensionAPI.settings.get("hmi-YTT")) {
+                hmiYTT = extensionAPI.settings.get("hmi-YTT");
+            } else {
+                hmiYTT = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-WS")) {
+                hmiWS = extensionAPI.settings.get("hmi-WS");
+            } else {
+                hmiWS = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-TOC")) {
+                hmiTOC = extensionAPI.settings.get("hmi-TOC");
+            } else {
+                hmiTOC = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-RT")) {
+                hmiRT = extensionAPI.settings.get("hmi-RT");
+            } else {
+                hmiRT = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-AT")) {
+                hmiAT = extensionAPI.settings.get("hmi-AT");
+            } else {
+                hmiAT = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-CDMT")) {
+                hmiCDMT = extensionAPI.settings.get("hmi-CDMT");
+            } else {
+                hmiCDMT = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-BT")) {
+                hmiBT = extensionAPI.settings.get("hmi-BT");
+            } else {
+                hmiBT = "Show on All Platforms";
+            }
+            if (extensionAPI.settings.get("hmi-RSDMT")) {
+                hmiRSDMT = extensionAPI.settings.get("hmi-RSDMT");
+            } else {
+                hmiRSDMT = "Show on All Platforms";
+            }
+            hideDIVs();
+        }, 10000);
 
         // onchange
         function setHMI(evt, i) {
@@ -288,7 +290,7 @@ async function hideDIVs() {
     bt = document.getElementById("bionic-button");
     btSib = bt.nextSibling;
     rsdmt = document.getElementsByClassName("roamstudio-dm-toggle");
-    
+
     // Zotero - id "zotero-roam-slot" and has a nextSib
 
     if (window.roamAlphaAPI.platform.isMobile || window.roamAlphaAPI.platform.isMobileApp || window.roamAlphaAPI.platform.isTouchDevice || window.roamAlphaAPI.platform.isIOS) {
@@ -457,7 +459,6 @@ async function hideDIVs() {
             }
         }
         if (hmiRSDMT != "Show on All Platforms") {
-            console.info(rsdmt)
             if (rsdmt != undefined && rsdmt.length > 0) {
                 rsdmt[0].style.display = "none";
                 rsdmt[1].style.display = "none";
@@ -649,4 +650,8 @@ async function hideDIVs() {
             }
         }
     }
+}
+
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
