@@ -288,7 +288,9 @@ async function hideDIVs() {
     rt = document.getElementById("rtDiv");
     cdmt = document.getElementsByClassName("dm-toggle");
     bt = document.getElementById("bionic-button");
-    btSib = bt.nextSibling;
+    if (bt != undefined) {
+        btSib = bt.nextSibling;
+    }
     rsdmt = document.getElementsByClassName("roamstudio-dm-toggle");
 
     // Zotero - id "zotero-roam-slot" and has a nextSib
