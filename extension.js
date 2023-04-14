@@ -1,5 +1,5 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
-var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT, hmiBT, hmiRSDMT = undefined;
+var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT, hmiBT, hmiRSDMT, hmiRP = undefined;
 let observer = undefined;
 
 export default {
@@ -91,6 +91,12 @@ export default {
                     description: "Whether to hide the Roam Studio Dark Mode Toggle button",
                     action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 14); } },
                 },
+                {
+                    id: "hmi-RP",
+                    name: "Roam Portal Toggle",
+                    description: "Whether to hide the Roam Portal Toggle button",
+                    action: { type: "select", items: ["Show on All Platforms", "Hide on Mobile", "Hide on All Platforms"], onChange: (evt) => { setHMI(evt, 15); } },
+                },
             ]
         };
         extensionAPI.settings.panel.create(config);
@@ -169,6 +175,11 @@ export default {
             } else {
                 hmiRSDMT = "Show on All Platforms";
             }
+            if (extensionAPI.settings.get("hmi-RP")) {
+                hmiRP = extensionAPI.settings.get("hmi-RP");
+            } else {
+                hmiRP = "Show on All Platforms";
+            }
             hideDIVs();
         }, 10000);
 
@@ -202,6 +213,8 @@ export default {
                 hmiBT = evt;
             } else if (i == 14) {
                 hmiRSDMT = evt;
+            } else if (i == 15) {
+                hmiRP = evt;
             }
             hideDIVs();
         }
@@ -247,13 +260,14 @@ export default {
         hmiCDMT = false;
         hmiBT = false;
         hmiRSDMT = false;
+        hmiRP = false;
         hideDIVs();
     }
 }
 
 async function hideDIVs() {
     var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
-    var ytt, ws, toc, rt, at, atSib, cdmt, bt, btSib, rsdmt;
+    var ytt, ws, toc, rt, at, atSib, cdmt, bt, btSib, rsdmt, rp, rpSib;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
     if (topbar.length > 0) {
@@ -278,6 +292,9 @@ async function hideDIVs() {
             } else if (topbar[i].innerHTML.indexOf("bp3-icon-eye-off") !== -1) {
                 at = topbar[i];
                 atSib = at.nextSibling;
+            } else if (topbar[i].innerHTML.indexOf("bp3-icon-ring") !== -1) {
+                rp = topbar[i];
+                rpSib = rp.nextSibling;
             }
         }
     }
@@ -286,12 +303,12 @@ async function hideDIVs() {
     ws = document.getElementById("workspaces");
     toc = document.getElementById("tableOfContents");
     rt = document.getElementById("rtDiv");
-    cdmt = document.getElementsByClassName("dm-toggle");
+    cdmt = document.getElementsByClassName("dm-toggle"); // there are three elements to iterate through
     bt = document.getElementById("bionic-button");
     if (bt != undefined) {
         btSib = bt.nextSibling;
     }
-    rsdmt = document.getElementsByClassName("roamstudio-dm-toggle");
+    rsdmt = document.getElementsByClassName("roamstudio-dm-toggle"); // there are three elements to iterate through
 
     // Zotero - id "zotero-roam-slot" and has a nextSib
 
@@ -473,6 +490,21 @@ async function hideDIVs() {
                 rsdmt[2].style.display = "";
             }
         }
+        if (hmiRP != "Show on All Platforms") {
+            if (rp != undefined) {
+                rp.style.display = "none";
+            }
+            if (rpSib != undefined) {
+                rpSib.style.display = "none";
+            }
+        } else {
+            if (rp != undefined) {
+                rp.style.display = "";
+            }
+            if (rpSib != undefined) {
+                rpSib.style.display = "";
+            }
+        }
     } else {
         // hide items only if selected for all platforms
         if (hmiPF == "Hide on All Platforms") {
@@ -649,6 +681,21 @@ async function hideDIVs() {
                 rsdmt[0].style.display = "";
                 rsdmt[1].style.display = "";
                 rsdmt[2].style.display = "";
+            }
+        }
+        if (hmiRP == "Hide on All Platforms") {
+            if (rp != undefined) {
+                rp.style.display = "none";
+            }
+            if (rpSib != undefined) {
+                rpSib.style.display = "none";
+            }
+        } else {
+            if (rp != undefined) {
+                rp.style.display = "";
+            }
+            if (rpSib != undefined) {
+                rpSib.style.display = "";
             }
         }
     }
