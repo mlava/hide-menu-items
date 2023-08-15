@@ -1,6 +1,8 @@
 var hmiPF, hmiCal, hmi3DM, hmiPW, hmiHelp, hmiRS = undefined;
 var hmiYTT, hmiWS, hmiTOC, hmiRT, hmiAT, hmiCDMT, hmiBT, hmiRSDMT, hmiRP = undefined;
 let observer = undefined;
+var hashChange = undefined;
+var pf;
 
 export default {
     onload: ({ extensionAPI }) => {
@@ -219,6 +221,13 @@ export default {
             hideDIVs();
         }
 
+        // on hashchange
+        hashChange = async (e) => {
+            await sleep(30);
+            hideDIVs();
+        };
+        window.addEventListener('hashchange', hashChange);
+
         async function initiateObserver() {
             const targetNode1 = document.getElementsByClassName("rm-topbar")[0];
             const config = { attributes: false, childList: true, subtree: true };
@@ -266,7 +275,7 @@ export default {
 }
 
 async function hideDIVs() {
-    var pf, pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
+    var pfSib, calendar, calendarSib, threeDot, threeDotSib, width, widthSib, help, helpSib, rightSidebar;
     var ytt, ws, toc, rt, at, atSib, cdmt, bt, btSib, rsdmt, rp, rpSib;
 
     let topbar = document.querySelectorAll("div.rm-topbar > span.bp3-popover-wrapper");
